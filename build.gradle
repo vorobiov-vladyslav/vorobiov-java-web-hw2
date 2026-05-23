@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.homework'
+version = '1.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.h2database:h2:2.2.224'
+}
+
+tasks.register('initDb', JavaExec) {
+    group = 'database'
+    description = 'Create tables in H2 from sql/init_db.sql'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.homework.DatabaseInitService'
+}
+
+tasks.register('populateDb', JavaExec) {
+    group = 'database'
+    description = 'Insert data into H2 from sql/populate_db.sql'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.homework.DatabasePopulateService'
+}
+
+tasks.register('queryDb', JavaExec) {
+    group = 'database'
+    description = 'Run all SELECT queries and print results'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.homework.DatabaseQueryService'
+}
